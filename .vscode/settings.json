@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "hwsetup.h": "c",
+        "dvfs.h": "c",
+        "freertos.h": "c",
+        "portable.h": "c"
+    }
+}

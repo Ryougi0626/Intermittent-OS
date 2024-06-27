@@ -35,7 +35,6 @@ int DID0;
 #pragma NOINIT(DID1)
 int DID1;
 
-int a;
 /*
  * description: Initialize variables used for debugging and logging
  * parameters: none
