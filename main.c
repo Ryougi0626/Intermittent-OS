@@ -76,6 +76,9 @@ int main( void )
         //low voltage detector
 	    initVDetector();
 
+		//uart initialization
+		uartinit();
+
 	    //create application tasks here
 	    demo();
 
@@ -91,6 +94,8 @@ int main( void )
 
 	    //low voltage detector
 	    initVDetector();
+
+		uartinit();
 
 	    //recover all tasks
 	    failureRecovery();

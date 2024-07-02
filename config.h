@@ -21,5 +21,6 @@
 #define IDTIMER 1
 #define IDMATMUL 2
 #define IDMATH32 3
+#define IDIMG 4  //image processing
 
 #endif /* CONFIG_H_ */
