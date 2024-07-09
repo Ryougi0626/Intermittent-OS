@@ -19,7 +19,8 @@
 //Used for demo
 #define IDIDLE 0
 #define IDTIMER 1
-#define IDMATMUL 2
-#define IDMATH32 3
+
+//OUR DEMO
+#define IDFILTER 2
 
 #endif /* CONFIG_H_ */

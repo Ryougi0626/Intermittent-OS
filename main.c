@@ -77,6 +77,9 @@ int main( void )
         //low voltage detector
 	    initVDetector();
 
+		//ininitialize the uart
+		uartinit();
+
 	    //create application tasks here
 	    demo();
 
@@ -85,13 +88,16 @@ int main( void )
 	}
 	else{//system recovery
 	    failCount++;//logging the time of power failures
-
+		
 	    /* DEBUG: if the device dies before we trigger the low voltage interrupt, the voltage is not set properly */
 	    if(voltage == ABOVE)//if we die before switch out
 	        aboveFail++;
 
 	    //low voltage detector
 	    initVDetector();
+
+		//ininitialize the uart
+		uartinit();
 
 	    //recover all tasks
 	    failureRecovery();
