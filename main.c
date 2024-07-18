@@ -16,7 +16,8 @@
 #include <TaskManager/taskManager.h>
 #include <DataManager/SimpDB.h>
 #include <main.h>
-#include <demo.h>
+
+#include <img/img_process.h>
 
 //record some information for status of lengthy tasks
 #pragma NOINIT(runHigh)
@@ -32,9 +33,9 @@ int aboveFail;
 //data id
 #pragma NOINIT(DID0)
 int DID0;
-#pragma NOINIT(DID1)
-int DID1;
 
+unsigned int count = 0;
+unsigned long loop = 0;
 
 /*
  * description: Initialize variables used for debugging and logging
@@ -51,7 +52,6 @@ void intializeLOGVar()
     aboveFail = 0;
     timeCounter = 0;
     DID0 = -1;
-    DID1 = -1;
     resetTasks();//no task is created before
     constructor();//init data structures of data manager
     pvInitHeapVar();//init variables for the NVM heap
@@ -71,24 +71,25 @@ int main( void )
     /* Configure the hardware to run the demo. */
     prvSetupHardware();
 
+	GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0);
+
+	GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0);
+
 	if(recoverable != 1){//run from the scratch
 	    intializeLOGVar();
 
         //low voltage detector
 	    initVDetector();
 
-		//ininitialize the uart
-		uartinit();
-
 	    //create application tasks here
-	    demo();
+	    task_create();
 
 	    //start scheduler of freeRTOS
 	    vTaskStartScheduler();
 	}
 	else{//system recovery
 	    failCount++;//logging the time of power failures
-		
+
 	    /* DEBUG: if the device dies before we trigger the low voltage interrupt, the voltage is not set properly */
 	    if(voltage == ABOVE)//if we die before switch out
 	        aboveFail++;

@@ -1,4 +1,6 @@
 #include <img_process.h>
+#include <taskManager.h>
+#include <SimpDB.h>
 #include <driverlib.h>
 
 #pragma PERSISTENT(raw_img_table)
@@ -3242,48 +3244,59 @@ unsigned char raw_img_table[180][320] = {
    72, 255, 255,  61,  60,  72,  77,  76,  73,  35,  46,  52,  45,  53,  50,  50,  51,  49,
    52,   0,  59,  44,  52,  57,  52,  51,  53,  43,  43,  46,  38,   0,  42,  67,  49,  50,
    60,  63,  59,  62, 255,  52,  52,  52,  50,  48,  37,  37,  52,  51,  56,  51,  52,  41,
-   44,  41,  51,  42,  51,  51,   3,  52,  51,  52,  50,  49, 255,  51}}
-;
+   44,  41,  51,  42,  51,  51,   3,  52,  51,  52,  50,  49, 255,  51}};
 
 #pragma PERSISTENT(img_table)
 unsigned char img_table[180][320] = {0};
 
+void meanvalue_filter();
 unsigned char sort(unsigned char*);
+//void transmit_data();
 
+void task_create(){
+    xTaskCreate(meanvalue_filter, "meanvalue_filter", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL, 2, INVM);
+}
+
+extern int DID0;
+extern int count;
+extern unsigned long loop;
+extern unsigned long timeCounter;
 void meanvalue_filter(){
     //318 178
     //106 60
     short j;
     unsigned char i;
     unsigned char temp[9] = {0};
+    while(1){
+        for(i = 0; i < 180; i++){
+            for(j = 0; j < 320; j++){
+                if(i == 0 || i == 179|| j == 0 || j == 319){
+                    img_table[i][j] = raw_img_table[i][j];
+                }
+                else{
+                    temp[0] = raw_img_table[i-1][j-1];   temp[1] = raw_img_table[i-1][j];    temp[2] = raw_img_table[i-1][j+1];
+                    temp[3] = raw_img_table[i][j-1];     temp[4] = raw_img_table[i][j];      temp[5] = raw_img_table[i][j+1];
+                    temp[6] = raw_img_table[i+1][j-1];   temp[7] = raw_img_table[i+1][j];    temp[8] = raw_img_table[i+1][j+1];
 
-    for(i = 0; i < 180; i++){
-        for(j = 0; j < 320; j++){
-            
-            if(i == 0 || i == 179|| j == 0 || j == 319){
-                img_table[i][j] = raw_img_table[i][j];
+                    img_table[i][j] = sort(temp);
+                }
+                count++;
             }
-            else{
-                temp[0] = raw_img_table[i-1][j-1];   temp[1] = raw_img_table[i-1][j];    temp[2] = raw_img_table[i-1][j+1];
-                temp[3] = raw_img_table[i][j-1];     temp[4] = raw_img_table[i][j];      temp[5] = raw_img_table[i][j+1];
-                temp[6] = raw_img_table[i+1][j-1];   temp[7] = raw_img_table[i+1][j];    temp[8] = raw_img_table[i+1][j+1];
-
-                img_table[i][j] = sort(temp);
-            } 
         }
+        count = 0;
+        loop = timeCounter;
     }
 }
 
-
-void transmit_data(){
-    short j;
-    unsigned char i;
-    for(i = 0; i < 180; i++){
-        for(j = 0; j < 320; j++){
-            EUSCI_A_UART_transmitData(EUSCI_A0_BASE, img_table[i][j]);
-        }
-    }
-}
+// void transmit_data(){
+//     short j;
+//     unsigned char i;
+//     for(i = 0; i < 180; i++){
+//         for(j = 0; j < 320; j++){
+//             EUSCI_A_UART_transmitData(EUSCI_A0_BASE, img_table[i][j]);
+//         }
+//     }
+// }
 
 unsigned char sort(unsigned char *arr){
     unsigned char temp;

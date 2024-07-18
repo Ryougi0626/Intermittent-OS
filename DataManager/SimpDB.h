@@ -20,7 +20,7 @@ static unsigned char WSRValid[NUMTASK];
 
 struct working{//working space of data for tasks
     void* address;
-    int loc;//1 stands for SRAM, 0 stands for¡@NVM
+    int loc;//1 stands for SRAM, 0 stands forï¿½@NVM
     int id;//-1 for create
 };
 

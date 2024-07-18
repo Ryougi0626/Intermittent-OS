@@ -9,7 +9,7 @@
 #ifndef TASKMANAGER_TASKMANAGER_H_
 #define TASKMANAGER_TASKMANAGER_H_
 
-#include <FreeRTOS.h>
+#include <../FreeRTOS_Source/include/FreeRTOS.h>
 #include <task.h>
 #include "config.h"
 

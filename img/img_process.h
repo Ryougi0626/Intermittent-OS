@@ -1,7 +1,7 @@
 #ifndef IMG_PROCESS_H_
 #define IMG_PROCESS_H_
 
-void meanvalue_filter();
-void transmit_data();
+void task_create();
+
 
 #endif /* IMG_PROCESS_H_ */

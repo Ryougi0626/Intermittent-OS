@@ -63,68 +63,69 @@ MEMORY
     INFOB                   : origin = 0x1900, length = 0x80
     INFOA                   : origin = 0x1980, length = 0x80
     RAM                     : origin = 0x1C00, length = 0x2000
-    FRAM                    : origin = 0x4000, length = 0x27C00
-    MAP						: origin = 0x2BC00, length = 0x0180
-    NOINI                   : origin = 0x2BE00, length = 0x18200
-    JTAGSIGNATURE           : origin = 0x2BD80, length = 0x0004, fill = 0xFFFF
-    BSLSIGNATURE            : origin = 0x2BD84, length = 0x0004, fill = 0xFFFF
-    IPESIGNATURE            : origin = 0x2BD88, length = 0x0008, fill = 0xFFFF
-    INT00                   : origin = 0x2BD90, length = 0x0002
-    INT01                   : origin = 0x2BD92, length = 0x0002
-    INT02                   : origin = 0x2BD94, length = 0x0002
-    INT03                   : origin = 0x2BD96, length = 0x0002
-    INT04                   : origin = 0x2BD98, length = 0x0002
-    INT05                   : origin = 0x2BD9A, length = 0x0002
-    INT06                   : origin = 0x2BD9C, length = 0x0002
-    INT07                   : origin = 0x2BD9E, length = 0x0002
-    INT08                   : origin = 0x2BDA0, length = 0x0002
-    INT09                   : origin = 0x2BDA2, length = 0x0002
-    INT10                   : origin = 0x2BDA4, length = 0x0002
-    INT11                   : origin = 0x2BDA6, length = 0x0002
-    INT12                   : origin = 0x2BDA8, length = 0x0002
-    INT13                   : origin = 0x2BDAA, length = 0x0002
-    INT14                   : origin = 0x2BDAC, length = 0x0002
-    INT15                   : origin = 0x2BDAE, length = 0x0002
-    INT16                   : origin = 0x2BDB0, length = 0x0002
-    INT17                   : origin = 0x2BDB2, length = 0x0002
-    INT18                   : origin = 0x2BDB4, length = 0x0002
-    INT19                   : origin = 0x2BDB6, length = 0x0002
-    INT20                   : origin = 0x2BDB8, length = 0x0002
-    INT21                   : origin = 0x2BDBA, length = 0x0002
-    INT22                   : origin = 0x2BDBC, length = 0x0002
-    INT23                   : origin = 0x2BDBE, length = 0x0002
-    INT24                   : origin = 0x2BDC0, length = 0x0002
-    INT25                   : origin = 0x2BDC2, length = 0x0002
-    INT26                   : origin = 0x2BDC4, length = 0x0002
-    INT27                   : origin = 0x2BDC6, length = 0x0002
-    INT28                   : origin = 0x2BDC8, length = 0x0002
-    INT29                   : origin = 0x2BDCA, length = 0x0002
-    INT30                   : origin = 0x2BDCC, length = 0x0002
-    INT31                   : origin = 0x2BDCE, length = 0x0002
-    INT32                   : origin = 0x2BDD0, length = 0x0002
-    INT33                   : origin = 0x2BDD2, length = 0x0002
-    INT34                   : origin = 0x2BDD4, length = 0x0002
-    INT35                   : origin = 0x2BDD6, length = 0x0002
-    INT36                   : origin = 0x2BDD8, length = 0x0002
-    INT37                   : origin = 0x2BDDA, length = 0x0002
-    INT38                   : origin = 0x2BDDC, length = 0x0002
-    INT39                   : origin = 0x2BDDE, length = 0x0002
-    INT40                   : origin = 0x2BDE0, length = 0x0002
-    INT41                   : origin = 0x2BDE2, length = 0x0002
-    INT42                   : origin = 0x2BDE4, length = 0x0002
-    INT43                   : origin = 0x2BDE6, length = 0x0002
-    INT44                   : origin = 0x2BDE8, length = 0x0002
-    INT45                   : origin = 0x2BDEA, length = 0x0002
-    INT46                   : origin = 0x2BDEC, length = 0x0002
-    INT47                   : origin = 0x2BDEE, length = 0x0002
-    INT48                   : origin = 0x2BDF0, length = 0x0002
-    INT49                   : origin = 0x2BDF2, length = 0x0002
-    INT50                   : origin = 0x2BDF4, length = 0x0002
-    INT51                   : origin = 0x2BDF6, length = 0x0002
-    INT52                   : origin = 0x2BDF8, length = 0x0002
-    INT53                   : origin = 0x2BDFA, length = 0x0002
-    INT54                   : origin = 0x2BDFC, length = 0x0002
-    RESET                   : origin = 0x2BDFE, length = 0x0002
+    FRAM                    : origin = 0x4000, length = 0xBE00
+    MAP						: origin = 0xFE00, length = 0x0180
+    NOINI                   : origin = 0x10000,length = 0x12000
+    FRAM2                   : origin = 0x22000,length = 0x22000
+    JTAGSIGNATURE           : origin = 0xFF80, length = 0x0004, fill = 0xFFFF
+    BSLSIGNATURE            : origin = 0xFF84, length = 0x0004, fill = 0xFFFF
+    IPESIGNATURE            : origin = 0xFF88, length = 0x0008, fill = 0xFFFF
+    INT00                   : origin = 0xFF90, length = 0x0002
+    INT01                   : origin = 0xFF92, length = 0x0002
+    INT02                   : origin = 0xFF94, length = 0x0002
+    INT03                   : origin = 0xFF96, length = 0x0002
+    INT04                   : origin = 0xFF98, length = 0x0002
+    INT05                   : origin = 0xFF9A, length = 0x0002
+    INT06                   : origin = 0xFF9C, length = 0x0002
+    INT07                   : origin = 0xFF9E, length = 0x0002
+    INT08                   : origin = 0xFFA0, length = 0x0002
+    INT09                   : origin = 0xFFA2, length = 0x0002
+    INT10                   : origin = 0xFFA4, length = 0x0002
+    INT11                   : origin = 0xFFA6, length = 0x0002
+    INT12                   : origin = 0xFFA8, length = 0x0002
+    INT13                   : origin = 0xFFAA, length = 0x0002
+    INT14                   : origin = 0xFFAC, length = 0x0002
+    INT15                   : origin = 0xFFAE, length = 0x0002
+    INT16                   : origin = 0xFFB0, length = 0x0002
+    INT17                   : origin = 0xFFB2, length = 0x0002
+    INT18                   : origin = 0xFFB4, length = 0x0002
+    INT19                   : origin = 0xFFB6, length = 0x0002
+    INT20                   : origin = 0xFFB8, length = 0x0002
+    INT21                   : origin = 0xFFBA, length = 0x0002
+    INT22                   : origin = 0xFFBC, length = 0x0002
+    INT23                   : origin = 0xFFBE, length = 0x0002
+    INT24                   : origin = 0xFFC0, length = 0x0002
+    INT25                   : origin = 0xFFC2, length = 0x0002
+    INT26                   : origin = 0xFFC4, length = 0x0002
+    INT27                   : origin = 0xFFC6, length = 0x0002
+    INT28                   : origin = 0xFFC8, length = 0x0002
+    INT29                   : origin = 0xFFCA, length = 0x0002
+    INT30                   : origin = 0xFFCC, length = 0x0002
+    INT31                   : origin = 0xFFCE, length = 0x0002
+    INT32                   : origin = 0xFFD0, length = 0x0002
+    INT33                   : origin = 0xFFD2, length = 0x0002
+    INT34                   : origin = 0xFFD4, length = 0x0002
+    INT35                   : origin = 0xFFD6, length = 0x0002
+    INT36                   : origin = 0xFFD8, length = 0x0002
+    INT37                   : origin = 0xFFDA, length = 0x0002
+    INT38                   : origin = 0xFFDC, length = 0x0002
+    INT39                   : origin = 0xFFDE, length = 0x0002
+    INT40                   : origin = 0xFFE0, length = 0x0002
+    INT41                   : origin = 0xFFE2, length = 0x0002
+    INT42                   : origin = 0xFFE4, length = 0x0002
+    INT43                   : origin = 0xFFE6, length = 0x0002
+    INT44                   : origin = 0xFFE8, length = 0x0002
+    INT45                   : origin = 0xFFEA, length = 0x0002
+    INT46                   : origin = 0xFFEC, length = 0x0002
+    INT47                   : origin = 0xFFEE, length = 0x0002
+    INT48                   : origin = 0xFFF0, length = 0x0002
+    INT49                   : origin = 0xFFF2, length = 0x0002
+    INT50                   : origin = 0xFFF4, length = 0x0002
+    INT51                   : origin = 0xFFF6, length = 0x0002
+    INT52                   : origin = 0xFFF8, length = 0x0002
+    INT53                   : origin = 0xFFFA, length = 0x0002
+    INT54                   : origin = 0xFFFC, length = 0x0002
+    RESET                   : origin = 0xFFFE, length = 0x0002
 }
 
 /****************************************************************************/
@@ -142,8 +143,6 @@ SECTIONS
 
         GROUP(READ_WRITE_MEMORY)
         {
-
-            .TI.persistent : {}              /* For #pragma persistent            */
             .cio           : {}              /* C I/O Buffer                      */
             .sysmem        : {}              /* Dynamic memory allocation area    */
         } PALIGN(0x0400), RUN_START(fram_rw_start)
@@ -170,13 +169,13 @@ SECTIONS
 #ifndef __LARGE_DATA_MODEL__
     .const            : {} > FRAM           /* Constant data                     */
 #else
-    .const            : {} > FRAM           /* Constant data                     */
+    .const            : {} >> FRAM | FRAM2  /* Constant data                     */
 #endif
 
 #ifndef __LARGE_DATA_MODEL__
     .text             : {} > FRAM           /* Code                              */
 #else
-    .text             : {} > FRAM           /* Code                              */
+    .text             : {} >> FRAM2 | FRAM  /* Code                              */
 #endif
 
     #ifdef __TI_COMPILER_VERSION__
@@ -184,7 +183,7 @@ SECTIONS
             #ifndef __LARGE_DATA_MODEL__
                 .TI.ramfunc : {} load=FRAM, run=RAM, table(BINIT)
             #else
-                .TI.ramfunc : {} load=FRAM, run=RAM, table(BINIT)
+                .TI.ramfunc : {} load=FRAM | FRAM2, run=RAM, table(BINIT)
             #endif
         #endif
     #endif
@@ -199,8 +198,9 @@ SECTIONS
     } > IPESIGNATURE
 
     .bss        : {} > RAM                  /* Global & static vars              */
-    .data       : {} > RAM					/* Global & static vars              */
+    .data       : {} > RAM                  /* Global & static vars              */
     .TI.noinit  : {} > NOINI type=NOINIT    /* For #pragma noinit                */
+    .TI.persistent : {} > FRAM2         /* For #pragma persistent            */
     .map		: {} > MAP type=NOINIT
     .stack      : {} > RAM (HIGH)           /* Software system stack             */
 
@@ -361,5 +361,4 @@ SECTIONS
 /****************************************************************************/
 
 -l msp430fr5994.cmd
-
 

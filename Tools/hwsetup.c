@@ -72,6 +72,8 @@ void prvSetupHardware( void )
 
     /* Initialize UART */
     uartinit();
+
+
 }
 
 /*
