@@ -2,6 +2,10 @@
 #include <taskManager.h>
 #include <SimpDB.h>
 #include <driverlib.h>
+#include <hwsetup.h>
+
+#pragma NOINIT(DATA_BASE)
+int DATA_BASE[10];
 
 #pragma PERSISTENT(raw_img_table)
 unsigned char raw_img_table[180][320] = {
@@ -3246,69 +3250,91 @@ unsigned char raw_img_table[180][320] = {
    60,  63,  59,  62, 255,  52,  52,  52,  50,  48,  37,  37,  52,  51,  56,  51,  52,  41,
    44,  41,  51,  42,  51,  51,   3,  52,  51,  52,  50,  49, 255,  51}};
 
-#pragma PERSISTENT(img_table)
-unsigned char img_table[180][320] = {0};
+//#pragma PERSISTENT(img_table)
+//unsigned char img_table[180][320] = {0};
 
 void meanvalue_filter();
 unsigned char sort(unsigned char*);
-//void transmit_data();
+void header_create();
+void next_row();
+
+void LED();
+
 
 void task_create(){
-    xTaskCreate(meanvalue_filter, "meanvalue_filter", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL, 2, INVM);
+    xTaskCreate(meanvalue_filter, "meanvalue_filter", configMINIMAL_STACK_SIZE, NULL, 3, NULL, 2, INVM);
+    xTaskCreate(LED, "LED", configMINIMAL_STACK_SIZE, NULL, 3, NULL, 3, INVM);
+}
+
+extern int volt;
+void LED(){
+    int i = 0;
+    while(1){
+        P1OUT = i;   
+    }
 }
 
 extern int DID0;
-extern int count;
-extern unsigned long loop;
-extern unsigned long timeCounter;
+extern int voltage;
+int timer1 = 0;
+
 void meanvalue_filter(){
     //318 178
     //106 60
     short j;
     unsigned char i;
     unsigned char temp[9] = {0};
+
     while(1){
+        
+        while(GPIO_getInputPinValue(GPIO_PORT_P5, GPIO_PIN6) == 1);
+
         for(i = 0; i < 180; i++){
             for(j = 0; j < 320; j++){
-                if(i == 0 || i == 179|| j == 0 || j == 319){
-                    img_table[i][j] = raw_img_table[i][j];
+                header_create();
+
+                if(i == 0 || i == 179 || j == 0 || j == 319){
+                    EUSCI_A_UART_transmitData(EUSCI_A0_BASE, raw_img_table[i][j]);
                 }
                 else{
                     temp[0] = raw_img_table[i-1][j-1];   temp[1] = raw_img_table[i-1][j];    temp[2] = raw_img_table[i-1][j+1];
                     temp[3] = raw_img_table[i][j-1];     temp[4] = raw_img_table[i][j];      temp[5] = raw_img_table[i][j+1];
                     temp[6] = raw_img_table[i+1][j-1];   temp[7] = raw_img_table[i+1][j];    temp[8] = raw_img_table[i+1][j+1];
 
-                    img_table[i][j] = sort(temp);
+                    EUSCI_A_UART_transmitData(EUSCI_A0_BASE, sort(temp));
                 }
-                count++;
             }
+            next_row();
         }
-        count = 0;
-        loop = timeCounter;
     }
 }
-
-// void transmit_data(){
-//     short j;
-//     unsigned char i;
-//     for(i = 0; i < 180; i++){
-//         for(j = 0; j < 320; j++){
-//             EUSCI_A_UART_transmitData(EUSCI_A0_BASE, img_table[i][j]);
-//         }
-//     }
-// }
 
 unsigned char sort(unsigned char *arr){
     unsigned char temp;
     int i, j;
+
     for(i = 0; i < 9; i++){
-        for(j = 0; j < 9-i; j++){
-            if(arr[j] > arr[j+1]){
-                temp = arr[j];
-                arr[j] = arr[j+1];
-                arr[j+1] = temp;
+        for(j = i+1; j < 9; j++){
+            if(arr[j] < arr[i]){
+                temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
             }
         }
     }
+    
     return arr[4];
 }
+
+void header_create(){
+    EUSCI_A_UART_transmitData(EUSCI_A0_BASE, 0xFE);
+    EUSCI_A_UART_transmitData(EUSCI_A0_BASE, 0x01);
+    EUSCI_A_UART_transmitData(EUSCI_A0_BASE, 0xFE);
+}
+
+void next_row(){
+    EUSCI_A_UART_transmitData(EUSCI_A0_BASE, 0x00);
+    EUSCI_A_UART_transmitData(EUSCI_A0_BASE, 0x07);
+    EUSCI_A_UART_transmitData(EUSCI_A0_BASE, 0x01);
+}
+

@@ -1,7 +1,7 @@
 /*
  * taskManager.h
  *
- *  Created on: 2019¦~3¤ë8¤é
+ *  Created on: 2019ï¿½~3ï¿½ï¿½8ï¿½ï¿½
  *      Author: Meenchen
  *      Description: We build every "static" for the ease of implementation, which means some parameters need to be properly set for successful usage
  */
@@ -31,11 +31,11 @@ enum{
 static unsigned char Tallocation[NUMTASK];
 #pragma NOINIT(Running)
 static unsigned char Running[NUMTASK];
-
+// #pragma NONINIT()//maintain all TCBs
 
 //maintain all NVM tasks
 #pragma NOINIT(SBuffer)//their stack buffer
-static unsigned char SBuffer[NUMTASK][configMINIMAL_STACK_SIZE*sizeof( StackType_t)];//12*140
+static unsigned char SBuffer[NUMTASK][configMINIMAL_STACK_SIZE*sizeof( StackType_t)];
 #pragma NOINIT(HBuffer)//heap buffers
 static unsigned char HBuffer[NUMTASK][HEAPBUFF];
 #pragma NOINIT(HIndex)//indexes for each buffer usage

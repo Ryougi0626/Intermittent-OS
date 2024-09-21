@@ -278,7 +278,6 @@ void failureRecovery(){
                 xTaskCreate(TCB->AddressOfNVMFunction, "recovered lengthy tasks", configMINIMAL_STACK_SIZE, NULL, TCB->uxPriority, NULL, i, INNVM);
             }
         }
-
     }
 
     //detect lengthy tasks and recovery them as lengthy

@@ -52,6 +52,11 @@ void DBworking(struct working* wIn, int id);
 void * getStackVM(int taskID);
 void * getTCBVM(int taskID);
 
+/*save task's stack which in VM*/
+void saveVMstackinNVM(unsigned char* VMstack, unsigned char* NVMstack);
+
+void saveNVMstackinVM(unsigned char* VMstack, unsigned char* NVMstack);
+
 /* functions for validation*/
 void registerTCB(int id);
 void unresgisterTCB(int id);

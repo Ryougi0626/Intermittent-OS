@@ -34,8 +34,7 @@ int aboveFail;
 #pragma NOINIT(DID0)
 int DID0;
 
-unsigned int count = 0;
-unsigned long loop = 0;
+int volt;
 
 /*
  * description: Initialize variables used for debugging and logging
@@ -51,7 +50,6 @@ void intializeLOGVar()
     lengthyFail = 0;
     aboveFail = 0;
     timeCounter = 0;
-    DID0 = -1;
     resetTasks();//no task is created before
     constructor();//init data structures of data manager
     pvInitHeapVar();//init variables for the NVM heap
@@ -71,10 +69,6 @@ int main( void )
     /* Configure the hardware to run the demo. */
     prvSetupHardware();
 
-	GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0);
-
-	GPIO_setOutputHighOnPin(GPIO_PORT_P1, GPIO_PIN0);
-
 	if(recoverable != 1){//run from the scratch
 	    intializeLOGVar();
 
@@ -90,22 +84,15 @@ int main( void )
 	else{//system recovery
 	    failCount++;//logging the time of power failures
 
+		//low voltage detector
+	    initVDetector();
+
 	    /* DEBUG: if the device dies before we trigger the low voltage interrupt, the voltage is not set properly */
 	    if(voltage == ABOVE)//if we die before switch out
 	        aboveFail++;
-
-	    //low voltage detector
-	    initVDetector();
-
-		//ininitialize the uart
-		uartinit();
 
 	    //recover all tasks
 	    failureRecovery();
 	}
 	return 0;
 }
-
-
-
-

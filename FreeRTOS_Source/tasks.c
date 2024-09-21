@@ -703,6 +703,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 
 #endif /* portUSING_MPU_WRAPPERS */
 /*-----------------------------------------------------------*/
+extern int recoverable;
 #if(configSUPPORT_LENGHTY_TASK == 1)
 
 	BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
@@ -746,11 +747,21 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 	        {
 	        StackType_t *pxStack;
 
+
 	            /* Allocate space for the stack used by the task being created. */
 	            if(location == INNVM)
+				{
 	                pxStack = getStackAddress(taskID);
+				}
+				else if(location == INVM && recoverable){
+					pxStack = getStackVM(taskID);
+					saveNVMstackinVM(getStackVM(taskID), getStackAddress(taskID));
+				}
 	            else
-	                pxStack = getStackVM(taskID);
+				{
+					pxStack = getStackVM(taskID);
+				}
+	             
 //	                pxStack = ( StackType_t * ) pvPortMalloc( ( ( ( size_t ) usStackDepth ) * sizeof( StackType_t ) ) ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
 
 	            if( pxStack != NULL )
@@ -775,7 +786,6 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 	                        allocateInNVM(taskID);
 	                    else
 	                        allocateInVM(taskID);
-
 	                }
 	                else
 	                {

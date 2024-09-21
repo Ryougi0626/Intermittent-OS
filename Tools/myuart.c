@@ -95,117 +95,6 @@ EUSCI_A_UART_initParam UartParams[8] = {
    EUSCI_A_UART_OVERSAMPLING_BAUDRATE_GENERATION
 }};
 
-
-// void print2uart(char* format,...)
-// {
-//     char *traverse;
-//     int i;
-//     unsigned long l;
-//     char *s;
-
-//     //Module 1: Initializing Myprintf's arguments
-//     va_list arg;
-//     va_start(arg, format);
-
-//     for(traverse = format; *traverse != '\0'; traverse++)
-//     {
-//         while( *traverse != '%' && *traverse != '\0' )
-//         {
-//             EUSCI_A_UART_transmitData(EUSCI_A0_BASE, (uint8_t)*traverse);
-//             traverse++;
-//         }
-
-//         if(*traverse == '\0')
-//             break;
-
-//         traverse++;
-
-//         //Module 2: Fetching and executing arguments
-//         switch(*traverse)
-//         {
-//             case 'c' :
-//                 i = va_arg(arg,int);        //Fetch char argument
-//                 EUSCI_A_UART_transmitData(EUSCI_A0_BASE, (uint8_t)i);
-//                 break;
-//             case 'l' :
-//                 l = va_arg(arg,unsigned long);        //Fetch Decimal/Integer argument
-//                 print2uart(convertl(l,10));
-//                 break;
-//             case 'd' :
-//                 i = va_arg(arg,int);        //Fetch Decimal/Integer argument
-//                 if(i<0)
-//                 {
-//                     i = -i;
-//                     EUSCI_A_UART_transmitData(EUSCI_A0_BASE, (uint8_t)'-');
-//                 }
-//                 print2uart(convert(i,10));
-//                 break;
-//             case 's':
-//                 s = va_arg(arg,char *);         //Fetch string
-//                 print2uart(s);
-//                 break;
-//             case 'x':
-//                 i = va_arg(arg,unsigned int); //Fetch Hexadecimal representation
-//                 print2uart(convert(i,16));
-//                 break;
-//         }
-//     }
-//     //Module 3: Closing argument list to necessary clean-up
-//     va_end(arg);
-// }
-
-// void dummyprint(char* format,...)
-// {
-//     return;
-// }
-
-
-// void print2uartlength(char* str,int length)
-// {
-//     int i;
-
-//     for(i = 0; i < length; i++)
-//     {
-//         EUSCI_A_UART_transmitData(EUSCI_A0_BASE, (uint8_t)*(str+i));
-//     }
-// }
-
-// char *convert(unsigned int num, int base)
-// {
-//     static char Representation[]= "0123456789ABCDEF";
-//     static char buffer[50];
-//     char *ptr;
-
-//     ptr = &buffer[49];
-//     *ptr = '\0';
-
-//     do
-//     {
-//         *--ptr = Representation[num%base];
-//         num /= base;
-//     }while(num != 0);
-
-//     return(ptr);
-// }
-
-// char *convertl(unsigned long num, int base)
-// {
-//     static char Representation[]= "0123456789ABCDEF";
-//     static char buffer[50];
-//     char *ptr;
-
-//     ptr = &buffer[49];
-//     *ptr = '\0';
-
-//     do
-//     {
-//         *--ptr = Representation[num%base];
-//         num /= base;
-//     }while(num != 0);
-
-//     return(ptr);
-// }
-
 /* Initialize serial */
 void uartinit()
 {
@@ -218,15 +107,15 @@ void uartinit()
 
         EUSCI_A_UART_enable(EUSCI_A0_BASE);
 
-        EUSCI_A_UART_clearInterrupt(EUSCI_A0_BASE,
-                                    EUSCI_A_UART_TRANSMIT_INTERRUPT);
-
+//        EUSCI_A_UART_clearInterrupt(EUSCI_A0_BASE,
+//                                    EUSCI_A_UART_TRANSMIT_INTERRUPT);
+//
         // Enable USCI_A0 TX interrupt
-        EUSCI_A_UART_enableInterrupt(EUSCI_A0_BASE,
-                                     EUSCI_A_UART_TRANSMIT_INTERRUPT); // Enable interrupt
+//        EUSCI_A_UART_enableInterrupt(EUSCI_A0_BASE,
+//                                     EUSCI_A_UART_TRANSMIT_INTERRUPT); // Enable interrupt
 
         // Enable globale interrupt
-        __enable_interrupt();
+        //__enable_interrupt();
 
         // Select UART TXD on P2.0
         GPIO_setAsPeripheralModuleFunctionOutputPin(GPIO_PORT_P2, GPIO_PIN0, GPIO_SECONDARY_MODULE_FUNCTION);

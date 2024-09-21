@@ -311,6 +311,7 @@ void vPortSetupTimerInterrupt( void )
 extern int voltage;
 extern int runHigh;
 extern int runLow;
+extern int volt;
 volatile int tOut,tIn;//we need to put these variable globally to have them out of tasks' context
 /*
  * description: This is the interrupt handler function for the scheduler's timer. Context switch is performed here
@@ -336,13 +337,18 @@ extern void vPortTickISR( void );
 	#if configUSE_PREEMPTION == 1
 		extern void vPortPreemptiveTickISR( void );
 		vPortPreemptiveTickISR();
-		tIn = pxCurrentTCB->taskID;
-		//t1 is switched out
 		setStop(tOut);
+		tIn = pxCurrentTCB->taskID;
+		setRunning(tIn);
+		//t1 is switched out
+
 		//suspend lengthy tasks if needed
+
+        taskENTER_CRITICAL();
 		if(voltage == 0)
 		    suspendLengthy(pxCurrentTCB->taskID);//we can pull this up before context switch for better performance
-	#else
+        taskEXIT_CRITICAL();
+    #else
 		extern void vPortCooperativeTickISR( void );
 		vPortCooperativeTickISR();
 	#endif

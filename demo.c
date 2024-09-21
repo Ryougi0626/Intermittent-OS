@@ -27,7 +27,7 @@
 // {
 //     // xTaskCreate( math32, "math32", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL, IDMATH32, INVM);
 //     // xTaskCreate( matrixmultiplication, "matrix multiplication", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL, IDMATMUL, INVM);
-//     xTaskCreate( filter, "filter", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL, IDFILTER, INVM);
+//    xTaskCreate( filter, "filter", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL, IDFILTER, INVM);
 // }
 
 // // typedef unsigned short UInt16;

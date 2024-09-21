@@ -1,7 +1,7 @@
 /*
  * taskManager.c
  *
- *  Created on: 2019¦~3¤ë8¤é
+ *  Created on: 2019ï¿½~3ï¿½ï¿½8ï¿½ï¿½
  *      Author: Meenchen
  */
 
@@ -9,6 +9,8 @@
 
 #include <TaskManager/taskManager.h>
 
+//maybe ...
+#include <SimpDB.h>
 
 /*
  * Task control block.  A task control block (TCB) is allocated for each task,
@@ -175,6 +177,8 @@ void suspendLengthy(int current)
         for(i = 0; i < NUMTASK; i++)
             if(Tallocation[i] == INNVM)
                 vTaskSuspend(getTCBAddress(i));
+            else
+                saveVMstackinNVM(getStackVM(i), getStackAddress(i));
         return;
     }
     else
@@ -182,10 +186,11 @@ void suspendLengthy(int current)
         for(i = 0; i < NUMTASK; i++)
             if(Tallocation[i] == INNVM && i != current)
                 vTaskSuspend(getTCBAddress(i));
+            else
+                saveVMstackinNVM(getStackVM(i), getStackAddress(i));
         vTaskSuspend(NULL);
         return;
     }
-
 }
 
 /*  get a piece of NVM from the data buffer reserved for the task */

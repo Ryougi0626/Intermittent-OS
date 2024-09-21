@@ -5,6 +5,8 @@
  */
 
 #include "hwsetup.h"
+#include <driverlib.h>
+#include <myuart.h>
 
 /* we set the CPU frequency as 16 MHz by default */
 unsigned int FreqLevel = 8;
@@ -47,8 +49,13 @@ void prvSetupHardware( void )
     WDT_A_hold( __MSP430_BASEADDRESS_WDT_A__ );
 
     /* Set PJ.4 and PJ.5 for LFXT. */
-    GPIO_setAsPeripheralModuleFunctionInputPin(  GPIO_PORT_PJ, GPIO_PIN4 + GPIO_PIN5, GPIO_PRIMARY_MODULE_FUNCTION  );
+    GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_PJ, GPIO_PIN4 + GPIO_PIN5, GPIO_PRIMARY_MODULE_FUNCTION  );
 
+    GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P5, GPIO_PIN5 + GPIO_PIN6);
+
+    GPIO_setAsPeripheralModuleFunctionOutputPin(GPIO_PORT_P5, GPIO_PIN5 + GPIO_PIN6, GPIO_PRIMARY_MODULE_FUNCTION  );
+
+    P1DIR |= BIT0 | BIT1;
     /* Set DCO frequency to 16 MHz. */
     setFrequency(FreqLevel);
 
@@ -72,8 +79,6 @@ void prvSetupHardware( void )
 
     /* Initialize UART */
     uartinit();
-
-
 }
 
 /*
@@ -103,6 +108,10 @@ __interrupt void ADC12_ISR(void)
         ADC12IER2 |= ADC12HIIE;
         ADC12IFGR2 &= ~ADC12HIIFG;
         voltage = BELOW;
+
+        // EUSCI_A_UART_transmitData(EUSCI_A0_BASE, 0x01);
+        // EUSCI_A_UART_transmitData(EUSCI_A0_BASE, 0xFF);
+        // EUSCI_A_UART_transmitData(EUSCI_A0_BASE, 0x01);     
         break;
     case ADC12IV_ADC12INIFG: break;           // Vector 10:  ADC12IN
     case ADC12IV_ADC12IFG0:                   // Vector 12:  ADC12MEM0

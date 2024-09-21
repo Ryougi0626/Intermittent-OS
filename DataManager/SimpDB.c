@@ -1,7 +1,7 @@
 /*
  * SimpDB.cpp
  *
- *  Created on: 2017¦~7¤ë12¤é
+ *  Created on: 2017ï¿½~7ï¿½ï¿½12ï¿½ï¿½
  *      Author: WeiMingChen
  */
 
@@ -372,3 +372,18 @@ void* getTCBVM(int taskID)
     return &TCBVM[sizeof( tskTCB )*taskID];
 }
 
+void saveVMstackinNVM(unsigned char* VMstack, unsigned char* NVMstack)
+{
+    int i;
+    for(i = 0; i < configMINIMAL_STACK_SIZE * sizeof( StackType_t); i++){
+        NVMstack[i] = VMstack[i];
+    }
+}
+
+void saveNVMstackinVM(unsigned char* VMstack, unsigned char* NVMstack)
+{   
+    int i;
+    for(i = 0; i < configMINIMAL_STACK_SIZE * sizeof( StackType_t); i++){
+        VMstack[i] = NVMstack[i];
+    }
+}

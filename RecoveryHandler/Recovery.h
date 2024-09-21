@@ -1,7 +1,7 @@
 /*
  * Recover.h
  *
- *  Created on: 2018¦~2¤ë12¤é
+ *  Created on: 2018ï¿½~2ï¿½ï¿½12ï¿½ï¿½
  *      Author: Meenchen
  */
 
